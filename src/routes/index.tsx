@@ -15,6 +15,8 @@ export default component$(() => {
     backImage.value = value;
   });
 
+  const showPokemon = useSignal(true);
+
   return (
     <>
       <div class="flex flex-col justify-center items-center w-full">
@@ -26,6 +28,7 @@ export default component$(() => {
           id={pokemonid.value}
           size={200}
           backImage={backImage.value}
+          isVisible={showPokemon.value}
         />
 
         <div class=" flex ">
@@ -42,18 +45,20 @@ export default component$(() => {
             Siguiente
           </button>
           <button
-            onClick$={() => setBackImage(true)}
+            onClick$={() => setBackImage( !backImage.value )}
             class="bg-blue-500 hover:bg-blue-700 text-white text-lg font-bold py-2 px-4 rounded mx-2"
           >
-            Back
+            Voltear
           </button>
 
           <button
-            onClick$={() => setBackImage(false)}
+            onClick$={() => showPokemon.value = !showPokemon.value}
             class="bg-blue-500 hover:bg-blue-700 text-white text-lg font-bold py-2 px-4 rounded mx-2"
           >
-            Front
+            Revelar
           </button>
+
+         
         </div>
       </div>
     </>
