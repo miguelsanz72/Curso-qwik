@@ -1,26 +1,23 @@
-import { $, component$, useSignal } from '@builder.io/qwik';
+import { $, component$ } from '@builder.io/qwik';
 import { type DocumentHead, useNavigate } from '@builder.io/qwik-city';
 
 import { PokemonImage } from '~/components/pokemons/pokemon-image';
+import { usePokemonGame } from '~/hooks/use-pokemon-game';
 
 
 export default component$(() => {
 
   const nav = useNavigate();
+  const {
+    isPokemonVisible,
+    showBackImage,
+    pokemonId,
+    nextPokemon,
+    prevPokemon,
+    toggleVisible,
+    toggleFromBack,
+  } = usePokemonGame();
 
-  const pokemonId        = useSignal(1); // primitivos, booleans, strings, 
-  const showBackImage    = useSignal(false);
-  const isPokemonVisible = useSignal(true);
-
-
-  const changePokemonId = $(( value: number ) => {
-    if( (pokemonId.value + value) <= 0 ) return;
-    pokemonId.value += value;
-  });
-
-  // const goToPokemon = $(() => {
-  //   nav(`/pokemon/${ pokemonId.value }/`);
-  // });
 
   const goToPokemon = $(( id: number ) => {
     nav(`/pokemon/${ id }/`);
@@ -47,16 +44,16 @@ export default component$(() => {
 
         <div class="mt-2">
           
-          <button onClick$={ () => changePokemonId(-1) }  class="btn btn-primary mr-2">Anterior</button>
+          <button onClick$={ prevPokemon }  class="btn btn-primary mr-2">Anterior</button>
 
-          <button onClick$={ () => changePokemonId(+1) } class="btn btn-primary mr-2">Siguiente</button>
+          <button onClick$={ nextPokemon } class="btn btn-primary mr-2">Siguiente</button>
 
 
-          <button onClick$={ () => showBackImage.value = !showBackImage.value }  class="btn btn-primary mr-2">
+          <button onClick$={ toggleFromBack }  class="btn btn-primary mr-2">
             Voltear
           </button>
 
-          <button onClick$={ () => isPokemonVisible.value = !isPokemonVisible.value }  class="btn btn-primary mr-2">
+          <button onClick$={ toggleVisible }  class="btn btn-primary mr-2">
             Revelar
           </button>
         </div>
